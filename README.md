@@ -1,37 +1,49 @@
-## Welcome to GitHub Pages
+# shingoon-lab
 
-You can use the [editor on GitHub](https://github.com/Shinhocheol/shingoon.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+> Open Infrastructure 기술 블로그 — 1차 출처 기반의 팩트만 기록합니다.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+**Live**: https://shingoon.github.io
 
-### Markdown
+## 기술 도메인
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+| 카테고리 | 주제 |
+|---------|-----|
+| Cloud Platform | OpenStack (2024.2 Dalmatian+), Kolla-Ansible, Heat, Horizon |
+| Storage | Ceph (Reef/Squid+), RBD, CephFS, RGW, BlueStore |
+| Container | Kubernetes, Helm, Operator, CRI-O/containerd |
+| Networking | OVN, OVS, Neutron, Calico, Cilium, MetalLB |
+| Observability | Prometheus, Grafana, Alertmanager, Loki, Thanos |
+| CI/CD | GitLab CI, GitHub Actions, ArgoCD, Tekton, Jenkins |
+| MLOps | Kubeflow, MLflow, Seldon Core, KServe, Ray |
+| IaC | Ansible, Terraform, Packer |
 
-```markdown
-Syntax highlighted code block
+## Stack
 
-# Header 1
-## Header 2
-### Header 3
+- [Hugo](https://gohugo.io/) (extended) — static site generator
+- [PaperMod](https://github.com/adityatelange/hugo-PaperMod) — theme (git submodule)
+- GitHub Actions → GitHub Pages 배포
 
-- Bulleted
-- List
+## Local Development
 
-1. Numbered
-2. List
+```bash
+# 저장소 클론 (submodule 포함)
+git clone --recurse-submodules https://github.com/Shinhocheol/shingoon.github.io.git
+cd shingoon.github.io
 
-**Bold** and _Italic_ and `Code` text
+# 로컬 서버 실행
+hugo server -D
 
-[Link](url) and ![Image](src)
+# 새 글 작성
+hugo new content posts/<category>/<slug>/index.md
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## 디렉터리 규칙
 
-### Jekyll Themes
+- 블로그 글: `content/posts/{category}/{slug}/index.md`
+- 이미지: `content/posts/{category}/{slug}/images/`
+- 글로벌 이미지: `static/images/`
+- slug 형식: 영문 소문자 + 하이픈 (예: `ceph-rbd-benchmarking`)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Shinhocheol/shingoon.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## License
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+글: CC BY-NC-SA 4.0 / 코드 예제: MIT
