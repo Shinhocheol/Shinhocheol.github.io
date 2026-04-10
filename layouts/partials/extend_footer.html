@@ -1,0 +1,92 @@
+{{/* ===========================================
+     shingoon-lab: 커스텀 확장
+     - 좌측 사이드바 TOC (post-single 전용)
+     - Mermaid 다이어그램 렌더링
+     =========================================== */}}
+
+{{- if eq .Kind "page" }}
+<script>
+(function () {
+    function buildSidebarToc() {
+        // PaperMod가 렌더한 본문 TOC 에서 inner 리스트를 복제
+        var srcToc = document.querySelector('.post-single .toc .inner, .post-content > .toc .inner');
+        if (!srcToc) return;
+
+        var sidebar = document.createElement('aside');
+        sidebar.className = 'toc-sidebar';
+
+        var title = document.createElement('div');
+        title.className = 'toc-sidebar-title';
+        title.textContent = '목차';
+        sidebar.appendChild(title);
+
+        var clonedList = srcToc.cloneNode(true);
+        sidebar.appendChild(clonedList);
+
+        document.body.appendChild(sidebar);
+
+        // 스크롤 스파이
+        var headings = Array.prototype.slice.call(
+            document.querySelectorAll('.post-content h2[id], .post-content h3[id]')
+        );
+        var links = Array.prototype.slice.call(sidebar.querySelectorAll('a[href^="#"]'));
+
+        function onScroll() {
+            var current = '';
+            var offset = 120;
+            for (var i = 0; i < headings.length; i++) {
+                var rect = headings[i].getBoundingClientRect();
+                if (rect.top < offset) {
+                    current = headings[i].id;
+                } else {
+                    break;
+                }
+            }
+            if (!current && headings.length > 0) {
+                current = headings[0].id;
+            }
+            links.forEach(function (link) {
+                var href = link.getAttribute('href') || '';
+                if (href === '#' + current) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', buildSidebarToc);
+    } else {
+        buildSidebarToc();
+    }
+})();
+</script>
+
+{{/* Mermaid: 페이지에 .mermaid 엘리먼트가 있을 때만 로드 */}}
+<script>
+(function () {
+    if (!document.querySelector('.mermaid')) return;
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+    script.onload = function () {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+            (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        window.mermaid.initialize({
+            startOnLoad: true,
+            theme: isDark ? 'dark' : 'default',
+            securityLevel: 'loose',
+            fontFamily: 'inherit',
+            flowchart: { htmlLabels: true, curve: 'basis' },
+            sequence: { useMaxWidth: true }
+        });
+        window.mermaid.run();
+    };
+    document.head.appendChild(script);
+})();
+</script>
+{{- end }}
