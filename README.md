@@ -2,7 +2,7 @@
 
 > Open Infrastructure 기술 블로그 — 1차 출처 기반의 팩트만 기록합니다.
 
-**Live**: https://shingoon.github.io
+**Live**: https://shinhocheol.github.io
 
 ## 기술 도메인
 
@@ -27,8 +27,8 @@
 
 ```bash
 # 저장소 클론 (submodule 포함)
-git clone --recurse-submodules https://github.com/Shinhocheol/shingoon.github.io.git
-cd shingoon.github.io
+git clone --recurse-submodules https://github.com/Shinhocheol/Shinhocheol.github.io.git
+cd Shinhocheol.github.io
 
 # 로컬 서버 실행
 hugo server -D
